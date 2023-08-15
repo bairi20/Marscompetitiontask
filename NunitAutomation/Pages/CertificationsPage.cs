@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace NunitAutomation.Pages
 {
-    public class CertificationPage : CommonDriver
+    public class CertificationsPage : CommonDriver
 
     {
         private static IWebElement certificationsTab => driver.FindElement(By.XPath("//a[text()='Certifications']"));
@@ -57,6 +57,7 @@ namespace NunitAutomation.Pages
         public void updateCertifications(string certificate, string certifiedFrom, string year)
         {
             Wait.WaitToBeClickable(driver, "XPath", "//a[text()='Certifications']", 10);
+            Thread.Sleep(2000);
             certificationsTab.Click();
             string editiconXPath = $"//tbody/tr[td[text()='{certificate}'] and td[text()='{year}']]//span[1]";
             IWebElement editIcon = driver.FindElement(By.XPath(editiconXPath));
@@ -74,8 +75,8 @@ namespace NunitAutomation.Pages
         }
         public string getVerifyUpdateCertificationsList()
         {
-            Wait.WaitToBeVisible(driver, "XPath", ".//div[@data-tab='fourth']//table//td", 20);
-            Thread.Sleep(1000);
+           // Wait.WaitToBeVisible(driver, "XPath", ".//div[@data-tab='fourth']//table//td", 20);
+            Thread.Sleep(3000);
             return newUpdatedCertificate.Text;
         }
         public void deleteCertification(string certificate, string year)
@@ -89,8 +90,8 @@ namespace NunitAutomation.Pages
         }
         public string getVerifyDeleteCertificationList()
         {
-            Wait.WaitToBeVisible(driver, "XPath", ".//div[@data-tab='fourth']//table//td", 5);
-            Thread.Sleep(1000);
+           // Wait.WaitToBeVisible(driver, "XPath", ".//div[@data-tab='fourth']//table//td", 5);
+            Thread.Sleep(3000);
             return deletedCertificate.Text;
         }
         public void addNegativeCertifications(string certificate, string certifiedFrom, string year)

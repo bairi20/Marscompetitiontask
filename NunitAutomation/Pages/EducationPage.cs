@@ -8,6 +8,7 @@ namespace NunitAutomation.Pages
     public class EducationPage : CommonDriver
     {
         private static IWebElement educationTab => driver.FindElement(By.XPath("//a[text()='Education']"));
+        private static IWebElement updateEducationTab => driver.FindElement(By.XPath("//a[normalize-space()='Education']"));
         private static IWebElement addNewButton => driver.FindElement(By.XPath("//div[@class='ui bottom attached tab segment tooltip-target active']//div[contains(@class,'ui teal button')][normalize-space()='Add New']"));
         private static IWebElement universityTextBox => driver.FindElement(By.Name("instituteName"));
         private static IWebElement countryDropDown => driver.FindElement(By.Name("country"));
@@ -48,7 +49,7 @@ namespace NunitAutomation.Pages
         public void updateEducation(string university, string country, string title, string degree, string graduationyear)
         {
             Wait.WaitToBeClickable(driver, "XPath", "//a[text()='Education']", 5);
-            educationTab.Click();
+            updateEducationTab.Click();
             string editIconXPath = $"//tbody/tr[td[text()='{university}'] and td[text()='{degree}']]//span[1]";
             IWebElement editIcon = driver.FindElement(By.XPath(editIconXPath));
             editIcon.Click();
@@ -124,10 +125,12 @@ namespace NunitAutomation.Pages
 
         public void updateNegativeEdu(string university, string country, string title, string degree, string graduationyear)
         {
-            Wait.WaitToBeClickable(driver, "XPath", "//a[text()='Education']", 5);
+           // Wait.WaitToBeClickable(driver, "XPath", "//a[text()='Education']", 5);
+            Thread.Sleep(2000);
             educationTab.Click();
             string editIconXPath = $"//tbody/tr[td[text()='{university}'] and td[text()='{degree}']]//span[1]";
             IWebElement editIcon = driver.FindElement(By.XPath(editIconXPath));
+            Thread.Sleep(1000);
             editIcon.Click();
             universityTextBox.Clear();
             universityTextBox.SendKeys(university);
@@ -139,7 +142,7 @@ namespace NunitAutomation.Pages
             Thread.Sleep(1000);
             updateButton.Click();
             Wait.WaitToBeVisible(driver, "Xpath", "//div[@class='ns-box-inner']", 5);
-            Thread.Sleep(1000);
+            Thread.Sleep(2000);
             string popupMessage = messageBox.Text;
             Console.WriteLine("messageBox.Text is: " + popupMessage);
             //string expectedMessage1 = "Education as been Updated";

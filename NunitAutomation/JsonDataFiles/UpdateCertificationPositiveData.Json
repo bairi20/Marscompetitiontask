@@ -2,7 +2,7 @@
   {
     "certificate": "SpecFlow",
     "certifiedFrom": "NZSE",
-    "year": 2009
+    "year": 2006
   },
   {
     "certificate": "C# advance",
@@ -18,10 +18,6 @@
     "certificate": "API Testing",
     "certifiedFrom": "Nova Software ",
     "year": 2014
-  },
-  {
-    "certificate": "Java",
-    "certifiedFrom": "SVS Institute",
-    "year": 2018
   }
+  
 ]
