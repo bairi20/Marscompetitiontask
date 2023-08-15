@@ -1,0 +1,31 @@
+﻿[
+
+  {
+    "University": "kakatiya University",
+    "Country": "India",
+    "Title": "B.Sc",
+    "Degree": "microbiology",
+    "GraduationYear": 2009
+  },
+  {
+    "University": "Cuba University",
+    "Country": "Cuba",
+    "Title": "B.A",
+    "Degree": "Bachelor of Science",
+    "GraduationYear": 2015
+  },
+  {
+    "University": 2345678,
+    "Country": "New Zealand",
+    "Title": "B.SC",
+    "Degree": "!@#$%^&*",
+    "GraduationYear": 2012
+  },
+  {
+    "University": "!@#$456",
+    "Country": "Brazil",
+    "Title": "B.A",
+    "Degree": "............",
+    "GraduationYear": 2015
+  }
+]

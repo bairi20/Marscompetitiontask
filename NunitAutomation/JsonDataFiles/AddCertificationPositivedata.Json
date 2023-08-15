@@ -1,0 +1,27 @@
+﻿[
+  {
+    "certificate": "Specflow",
+    "certifiedFrom": "AIA Institute",
+    "year": 2006
+  },
+  {
+    "certificate": "C# advance",
+    "certifiedFrom": "MS Technologies",
+    "year": 2008
+  },
+  {
+    "certificate": "IT Test Analyst",
+    "certifiedFrom": "Industry Connect",
+    "year": 2012
+  },
+  {
+    "certificate": "API Testing",
+    "certifiedFrom": "SRk Technologies",
+    "year": 2014
+  },
+  {
+    "certificate": "Java",
+    "certifiedFrom": "MVP Studio",
+    "year": 2018
+  }
+]

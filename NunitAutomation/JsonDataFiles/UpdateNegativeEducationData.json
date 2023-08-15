@@ -1,0 +1,27 @@
+﻿[
+  {
+    "University": "kakatiya",
+    "Country": "Bangladesh",
+    "Title": "BFA",
+    "Degree": "computer science ",
+    "GraduationYear": 2015
+
+  },
+  {
+    "University": "Auckland University",
+    "Country": "Country of College/University",
+    "Title": "Title",
+    "Degree": "MFA",
+    "GraduationYear": "Year of Graduation"
+  },
+  {
+    "University": "kakatiya",
+    "Country": "Bangladesh",
+    "Title": "BFA",
+    "Degree": "computer science ",
+    "GraduationYear": 2015
+
+  }
+
+
+]
