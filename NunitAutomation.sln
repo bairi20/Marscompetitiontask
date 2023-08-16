@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33712.159
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NunitAutomation", "NunitAutomation\NunitAutomation.csproj", "{E7394984-5942-4DE3-B830-E9D276AE58CE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E7394984-5942-4DE3-B830-E9D276AE58CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7394984-5942-4DE3-B830-E9D276AE58CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7394984-5942-4DE3-B830-E9D276AE58CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7394984-5942-4DE3-B830-E9D276AE58CE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1EFA4918-D95B-4D58-A236-3AAC337D5047}
+	EndGlobalSection
+EndGlobal
