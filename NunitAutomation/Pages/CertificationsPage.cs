@@ -13,7 +13,7 @@ namespace NunitAutomation.Pages
     {
         private static IWebElement certificationsTab => driver.FindElement(By.XPath("//a[text()='Certifications']"));
         private static IWebElement addNewButton => driver.FindElement(By.XPath("//div[@class='ui bottom attached tab segment tooltip-target active']//div[contains(@class,'ui teal button')][normalize-space()='Add New']"));
-        private static IWebElement certificateTextbox => driver.FindElement(By.XPath("//input[@class='certification-award capitalize']"));
+        private static IWebElement certificateTextBox => driver.FindElement(By.XPath("//input[@class='certification-award capitalize']"));
         private static IWebElement certifiedFromTextbox => driver.FindElement(By.XPath("//input[@class='received-from capitalize']"));
         private static IWebElement yearDropdown => driver.FindElement(By.Name("certificationYear"));
         private static IWebElement addButton => driver.FindElement(By.XPath("//input[@value='Add']"));
@@ -35,15 +35,10 @@ namespace NunitAutomation.Pages
             Thread.Sleep(1000);
             addNewButton.Click();
             //Send the input
-            certificateTextbox.SendKeys(certificate);
+            certificateTextBox.SendKeys(certificate);
             certifiedFromTextbox.SendKeys(certifiedFrom);
             yearDropdown.SendKeys(year);
-            //Click on Add button
-            //Send the input
-            certificateTextbox.SendKeys(certificate);
-            certifiedFromTextbox.SendKeys(certifiedFrom);
-            yearDropdown.SendKeys(year);
-            //Click on Add button
+             //Click on Add button
             Wait.WaitToBeClickable(driver, "XPath", "//input[@value='Add']", 8);
             addButton.Click();
             Console.WriteLine("Certifications has been added");
@@ -51,20 +46,18 @@ namespace NunitAutomation.Pages
         }
         public string getVerifyCertificationList()
         {
-            Thread.Sleep(2000);
             return newCertification.Text;
         }
         public void updateCertifications(string certificate, string certifiedFrom, string year)
         {
             Wait.WaitToBeClickable(driver, "XPath", "//a[text()='Certifications']", 10);
-            Thread.Sleep(2000);
             certificationsTab.Click();
-            string editiconXPath = $"//tbody/tr[td[text()='{certificate}'] and td[text()='{year}']]//span[1]";
+            string editiconXPath = $"//tbody[tr[td[text()='{certificate}']]]//span[1]";
             IWebElement editIcon = driver.FindElement(By.XPath(editiconXPath));
             Thread.Sleep(2000);
             editIcon.Click();
-            certificateTextbox.Clear();
-            updateCertificate.SendKeys(certificate);
+            certificateTextBox.Clear();
+            certifiedFromTextbox.SendKeys(certificate);
             certifiedFromTextbox.Clear();
             updateCertifiedFrom.SendKeys(certifiedFrom);
             yearDropdown.SendKeys(year);
@@ -73,25 +66,24 @@ namespace NunitAutomation.Pages
 
 
         }
-        public string getVerifyUpdateCertificationsList()
+        public string getVerifyUpdateCertificationsList (string certificate, string certifiedFrom, string year)
         {
-           // Wait.WaitToBeVisible(driver, "XPath", ".//div[@data-tab='fourth']//table//td", 20);
-            Thread.Sleep(3000);
+            Wait.WaitToBeVisible(driver, "XPath", ".//div[@data-tab='fourth']//table//td", 20);
+            IWebElement newUpdatednewUpdatedCertificate = driver.FindElement(By.XPath($"//tbody[tr[td[text()='{certificate}']]]//span[1]"));
             return newUpdatedCertificate.Text;
         }
         public void deleteCertification(string certificate, string year)
         {
             Wait.WaitToBeClickable(driver, "XPath", "//a[text()='Certifications']", 8);
             certificationsTab.Click();
-            string deleteiconXPath = $"//tbody/tr[td[text()='{certificate}'] and td[text()='{year}']]//span[2]";
+            string deleteiconXPath = $"//tbody[tr[td[text()='{certificate}']]]//span[2]";
             IWebElement deleteIcon = driver.FindElement(By.XPath(deleteiconXPath));
             deleteIcon.Click();
             Console.WriteLine("certification deleted from your Certifications");
         }
         public string getVerifyDeleteCertificationList()
         {
-           // Wait.WaitToBeVisible(driver, "XPath", ".//div[@data-tab='fourth']//table//td", 5);
-            Thread.Sleep(3000);
+           Wait.WaitToBeVisible(driver, "XPath", ".//div[@data-tab='fourth']//table//td", 5);
             return deletedCertificate.Text;
         }
         public void addNegativeCertifications(string certificate, string certifiedFrom, string year)
@@ -104,7 +96,7 @@ namespace NunitAutomation.Pages
             Thread.Sleep(1000);
             addNewButton.Click();
             //Send the input
-            certificateTextbox.SendKeys(certificate);
+            certificateTextBox.SendKeys(certificate);
             certifiedFromTextbox.SendKeys(certifiedFrom);
             yearDropdown.SendKeys(year);
             //Click on Add button
@@ -141,7 +133,7 @@ namespace NunitAutomation.Pages
             string editiconXPath = $"//tbody/tr[td[text()='{certificate}']]//span[1]";
             IWebElement editIcon = driver.FindElement(By.XPath(editiconXPath));
             editIcon.Click();
-            certificateTextbox.Clear();
+            certificateTextBox.Clear();
             updateCertificate.SendKeys(certificate);
             certifiedFromTextbox.Clear();
             updateCertifiedFrom.SendKeys(certifiedFrom);
@@ -150,7 +142,6 @@ namespace NunitAutomation.Pages
             Console.WriteLine("Certification has been updated");
             //get the popup message text
             Wait.WaitToBeVisible(driver, "Xpath", "//div[@class='ns-box-inner']", 5);
-            Thread.Sleep(2000);
             string popupMessage = messageBox.Text;
             Console.WriteLine("messageBox.Text is: " + popupMessage);
             // string expectedMessage1 = "Certifications as been updated.";

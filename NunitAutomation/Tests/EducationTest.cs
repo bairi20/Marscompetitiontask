@@ -124,13 +124,8 @@ namespace NunitAutomation.Tests
                     //perform the education test using the Education data
                     educationPageObj = new EducationPage();
                     educationPageObj.updateEducation(university, country, title, degree, graduationyear);
-                    string verifyRecord = $"//tbody/tr[td[text()='{university}'] and td[text()='{degree}']]//span[1]";
-                    IWebElement desiredElement = driver.FindElement(By.XPath(verifyRecord));
-
-                    Console.WriteLine("Verification for updated record");
-                    //Console.WriteLine("Expected Data: " + country);
-                    // Console.WriteLine("Updated Education : " + updateEducation);
-                    if (desiredElement != null && desiredElement.Displayed)
+                    string newUpdatednewUpdatedCertificate = educationPageObj.getverifyUpdatedEducationData(university, country, title, degree, graduationyear);
+                    if (university== newUpdatednewUpdatedCertificate)
 
                     {
                         test.Pass("Updated Education and Expected Education match");

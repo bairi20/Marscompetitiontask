@@ -3,7 +3,7 @@
     "University": "kakatiya",
     "Country": "Bangladesh",
     "Title": "BFA",
-    "Degree": "computer science ",
+    "Degree": "computer science",
     "GraduationYear": 2015
 
   },
@@ -11,9 +11,16 @@
     "University": "kakatiya",
     "Country": "Bangladesh",
     "Title": "BFA",
-    "Degree": "computer science ",
+    "Degree": "computer science",
     "GraduationYear": 2015
 
+  },
+  {
+    "University": "kakatiya",
+    "Country": "Bangladesh",
+    "Title": "Title",
+    "Degree": "computer science",
+    "GraduationYear":2015
   }
 
 

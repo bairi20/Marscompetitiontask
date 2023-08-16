@@ -68,12 +68,12 @@ namespace NunitAutomation.Tests
                     test.Log(Status.Info, "Screenshot", MediaEntityBuilder.CreateScreenCaptureFromPath(screenshotPath).Build());
                 }
 
-                educationPageObj.addNegativeEdu(university, country, title, degree, graduationyear);
+                educationPageObj.AddNegativeEdu(university, country, title, degree, graduationyear);
 
 
             }
         }
-        [Test, Order(2)]
+       [Test, Order(2)]
         public void updateNegativeEducation_Test()
         {
             test = extent.CreateTest("UpdateNegativeEducation_Test", "UpdateEducationNegativeData");
@@ -94,14 +94,14 @@ namespace NunitAutomation.Tests
                 Console.WriteLine(degree);
                 string graduationyear = data.Graduationyear;
                 Console.WriteLine(graduationyear);
-                test.Log(Status.Pass, "Test Passed");
+                test.Log(Status.Pass, "Test Passed"); 
                 string screenshotPath = ScreenshotReport.CaptureScreenshot(driver, "UpdateNegativeEducation");
                 if (!string.IsNullOrEmpty(screenshotPath))
                 {
                     test.Log(Status.Info, "Screenshot", MediaEntityBuilder.CreateScreenCaptureFromPath(screenshotPath).Build());
                 }
-                educationPageObj = new EducationPage();
-                educationPageObj.updateNegativeEdu(university, country, title, degree, graduationyear);
+               educationPageObj = new EducationPage();
+               educationPageObj.updateNegativeEdu(university, country, title, degree, graduationyear);
 
 
 
@@ -113,7 +113,7 @@ namespace NunitAutomation.Tests
             test = extent.CreateTest("AddNegativeCertification_Test", "AddCertificationNegativeData");
 
             // Read test data from the JSON file using JsonHelper
-            List<CertificationTestModel> AddCertificationNegativeData = Jsonhelper.ReadTestDataFromJson<CertificationTestModel>("C:\\MVP Project\\NunitAutomation\\NunitAutomation\\JsonDataFiles\\AddCertificationNegative.Data.Json");
+            List<CertificationTestModel> AddCertificationNegativeData = Jsonhelper.ReadTestDataFromJson<CertificationTestModel>("C:\\MVP Project\\NunitAutomation\\NunitAutomation\\JsonDataFiles\\AddCertificationNegativeData.Json");
             Console.WriteLine(AddCertificationNegativeData.ToString());
             foreach (var data in AddCertificationNegativeData)
             {

@@ -22,7 +22,7 @@ namespace NunitAutomation.Tests
         private ExtentReports extent;
         private ExtentTest test;
 
-        private LoginPage loginPageObj = new LoginPage();
+       // private LoginPage loginPageObj = new LoginPage();
         private CertificationsPage CertificationsPageObj = new CertificationsPage();
 
         [SetUp]
@@ -33,19 +33,18 @@ namespace NunitAutomation.Tests
             driver = new ChromeDriver();
 
             //Login page object identified and defined
-            loginPageObj = new LoginPage();
-            loginPageObj = new LoginPage();
+            LoginPage loginPageObj = new LoginPage();
             loginPageObj.LoginSteps();
         }
         [Test, Order(1)]
         public void AddCertification_Test()
         {
-            test = extent.CreateTest("AddCertification_Test", "AddCertificationPositiveData");
+            test = extent.CreateTest("AddCertification_Test", "AddPositiveCertificationData");
 
             // Read test data from the JSON file using JsonHelper
-            List<CertificationTestModel> AddCertificationPositiveData = Jsonhelper.ReadTestDataFromJson<CertificationTestModel>("C:\\MVP Project\\NunitAutomation\\NunitAutomation\\JsonDataFiles\\AddCertificationPositivedata.Json");
-            Console.WriteLine(AddCertificationPositiveData.ToString());
-            foreach (var data in AddCertificationPositiveData)
+            List<CertificationTestModel> AddPositiveCertificationData = Jsonhelper.ReadTestDataFromJson<CertificationTestModel>("C:\\MVP Project\\NunitAutomation\\NunitAutomation\\JsonDataFiles\\AddPositiveCertificationData.json");
+            Console.WriteLine(AddPositiveCertificationData.ToString());
+            foreach (var data in AddPositiveCertificationData)
             {
                 // Access individual test data properties
                 string certificate = data.certificate;
@@ -104,10 +103,9 @@ namespace NunitAutomation.Tests
                 {
                     CertificationsPageObj.updateCertifications(certificate, certifiedFrom, year);
 
-                    string newUpdatedCertificate = CertificationsPageObj.getVerifyUpdateCertificationsList();
-                    string verifyRecord = $"//tbody/tr[td[text()='{certificate}']]//span[1]";
-                    IWebElement desiredElement = driver.FindElement(By.XPath(verifyRecord));
-                    if (desiredElement != null && desiredElement.Displayed)
+                    string newUpdatedCertificate = CertificationsPageObj.getVerifyUpdateCertificationsList(certificate, certifiedFrom, year);
+
+                    if (certificate== newUpdatedCertificate)
 
                     {
                         test.Pass("Updated Certificate data and Expected Certificate data match");
