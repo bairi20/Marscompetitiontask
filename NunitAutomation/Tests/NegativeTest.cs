@@ -3,7 +3,6 @@ using NUnit.Framework;
 using NunitAutomation.Pages;
 using NunitAutomation.TestModel;
 using NunitAutomation.Utilities;
-using NunitAutomation.Utilities.ExtentReport;
 using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
@@ -18,34 +17,17 @@ namespace NunitAutomation.Tests
     {
 #pragma warning disable CS8618
 
-        private ExtentReports extent;
-        private ExtentTest test;
 
-        private LoginPage loginPageObj = new LoginPage();
         private EducationPage educationPageObj = new EducationPage();
-        private CertificationsPage CertificationPageObj = new CertificationsPage();
-
-        [SetUp]
-        public void SetupAuction()
-        {
-            extent = BaseTestManager.getInstance();
-            driver = new ChromeDriver();
-            //Login page object identified and defined
-            loginPageObj = new LoginPage();
-            loginPageObj = new LoginPage();
-            loginPageObj.LoginSteps();
-
-
-
-
-        }
-
+        private CertificationsPage certificationsPageObj = new CertificationsPage();
+        private ExtentReports extent;
         [Test, Order(1)]
         public void AddNegativeEducation_Test()
         {
-            test = extent.CreateTest("AddNegativeEducation_Test", "AddNegativeEducationData");
-
-            
+            CommonDriver driver = new CommonDriver();
+            driver.InitializeExtentReports();
+            string testName = "AddNegativeEducation";
+            driver.SetupTest(testName);
             // Read test data from the JSON file using JsonHelper
             List<EducationTestModel> AddNegativeEducationData = Jsonhelper.ReadTestDataFromJson<EducationTestModel>("C:\\MVP Project\\NunitAutomation\\NunitAutomation\\JsonDataFiles\\AddNegativeEducationData.json");
             Console.WriteLine(AddNegativeEducationData.ToString());
@@ -61,13 +43,8 @@ namespace NunitAutomation.Tests
                 Console.WriteLine(degree);
                 string graduationyear = data.Graduationyear;
                 Console.WriteLine(graduationyear);
-                test.Log(Status.Pass, "Test Passed");
-                string screenshotPath = ScreenshotReport.CaptureScreenshot(driver, "AddNegativeEducation");
-                if (!string.IsNullOrEmpty(screenshotPath))
-                {
-                    test.Log(Status.Info, "Screenshot", MediaEntityBuilder.CreateScreenCaptureFromPath(screenshotPath).Build());
-                }
-
+                string screenshotName = "AddNegativeEducationData";
+                driver.CaptureScreenshot(screenshotName);
                 educationPageObj.AddNegativeEdu(university, country, title, degree, graduationyear);
 
 
@@ -76,8 +53,10 @@ namespace NunitAutomation.Tests
        [Test, Order(2)]
         public void updateNegativeEducation_Test()
         {
-            test = extent.CreateTest("UpdateNegativeEducation_Test", "UpdateEducationNegativeData");
-
+            CommonDriver driver = new CommonDriver();
+            driver.InitializeExtentReports();
+            string testName = "UpdateNegativeEducation";
+            driver.SetupTest(testName);
             // Read test data from the JSON file using JsonHelper
             List<EducationTestModel> UpdateEducationNegativeData = Jsonhelper.ReadTestDataFromJson<EducationTestModel>("C:\\MVP Project\\NunitAutomation\\NunitAutomation\\JsonDataFiles\\UpdateNegativeEducationData.json");
             Console.WriteLine(UpdateEducationNegativeData.ToString());
@@ -94,14 +73,9 @@ namespace NunitAutomation.Tests
                 Console.WriteLine(degree);
                 string graduationyear = data.Graduationyear;
                 Console.WriteLine(graduationyear);
-                test.Log(Status.Pass, "Test Passed"); 
-                string screenshotPath = ScreenshotReport.CaptureScreenshot(driver, "UpdateNegativeEducation");
-                if (!string.IsNullOrEmpty(screenshotPath))
-                {
-                    test.Log(Status.Info, "Screenshot", MediaEntityBuilder.CreateScreenCaptureFromPath(screenshotPath).Build());
-                }
-               educationPageObj = new EducationPage();
-               educationPageObj.updateNegativeEdu(university, country, title, degree, graduationyear);
+                string screenshotName = "UpdateEducationNegativeData";
+                driver.CaptureScreenshot(screenshotName);
+                educationPageObj.updateNegativeEdu(university, country, title, degree, graduationyear);
 
 
 
@@ -110,7 +84,10 @@ namespace NunitAutomation.Tests
         [Test, Order(3)]
         public void AddNegativeCertification_Test()
         {
-            test = extent.CreateTest("AddNegativeCertification_Test", "AddCertificationNegativeData");
+            CommonDriver driver = new CommonDriver();
+            driver.InitializeExtentReports();
+            string testName = "AddNegativeCertification";
+            driver.SetupTest(testName);
 
             // Read test data from the JSON file using JsonHelper
             List<CertificationTestModel> AddCertificationNegativeData = Jsonhelper.ReadTestDataFromJson<CertificationTestModel>("C:\\MVP Project\\NunitAutomation\\NunitAutomation\\JsonDataFiles\\AddCertificationNegativeData.Json");
@@ -124,22 +101,18 @@ namespace NunitAutomation.Tests
                 Console.WriteLine(certifiedFrom);
                 string year = data.year;
                 Console.WriteLine(year);
-                test.Log(Status.Pass, "Test Passed");
-                string screenshotPath = ScreenshotReport.CaptureScreenshot(driver, "AddNegativeCertification");
-                if (!string.IsNullOrEmpty(screenshotPath))
-                {
-                    test.Log(Status.Info, "Screenshot", MediaEntityBuilder.CreateScreenCaptureFromPath(screenshotPath).Build());
-                }
-
-                // Perform the education test using the Education data
-                CertificationPageObj.addNegativeCertifications(certificate, certifiedFrom, year);
+                string screenshotName = "AddCertificationNegativeData";
+                driver.CaptureScreenshot(screenshotName);
+                certificationsPageObj.addNegativeCertifications(certificate, certifiedFrom, year);
             }
         }
         [Test, Order(4)]
         public void UpdateNegativeCertification_Test()
         {
-            test = extent.CreateTest("UpdateNegativeCertification_Test", "UpdateCertificationNegativeData");
-
+            CommonDriver driver = new CommonDriver();
+            driver.InitializeExtentReports();
+            string testName = "UpdateNegativeCertification";
+            driver.SetupTest(testName);
             // Read test data from the JSON file using JsonHelper
             List<CertificationTestModel> UpdateCertificationNegativeData = Jsonhelper.ReadTestDataFromJson<CertificationTestModel>("C:\\MVP Project\\NunitAutomation\\NunitAutomation\\JsonDataFiles\\UpdateCertificationNegativeData.Json");
             Console.WriteLine(UpdateCertificationNegativeData.ToString());
@@ -152,23 +125,13 @@ namespace NunitAutomation.Tests
                 Console.WriteLine(certifiedFrom);
                 string year = data.year;
                 Console.WriteLine(year);
-                test.Log(Status.Pass, "Test Passed");
-                string screenshotPath = ScreenshotReport.CaptureScreenshot(driver, "UpdateNegativeCertification");
-                if (!string.IsNullOrEmpty(screenshotPath))
-                {
-                    test.Log(Status.Info, "Screenshot", MediaEntityBuilder.CreateScreenCaptureFromPath(screenshotPath).Build());
-                }
-                CertificationPageObj.updateNegativeCertifications(certificate, certifiedFrom, year);
+                string screenshotName = "UpdateCertificationNegativeData";
+                driver.CaptureScreenshot(screenshotName);
+                certificationsPageObj.updateNegativeCertifications(certificate, certifiedFrom, year);
 
             }
         }
 
-        [TearDown]
-
-        public void TearDownAction()
-        {
-            driver.Quit();
-            extent.Flush();
-        }
+      
     }
 }

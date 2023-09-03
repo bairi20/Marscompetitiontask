@@ -21,7 +21,7 @@ namespace NunitAutomation.Pages
 
         public void LoginSteps()
         {
-
+            driver = new ChromeDriver();
             driver.Navigate().GoToUrl("http://localhost:5000/");
             driver.Manage().Window.Maximize();
 
@@ -38,15 +38,12 @@ namespace NunitAutomation.Pages
             string password = jsonObject["password"].ToString();
 
             // Click the "Sign In" button
-            Wait.WaitToBeClickable(driver, "XPath", "//a[text()='Sign In']", 5);
             signInButton.Click();
 
             // Enter the provided email
-            Wait.WaitToBeVisible(driver, "Name", "email", 5);
             emailTextBox.SendKeys(email);
 
             // Enter the provided password
-            Wait.WaitToBeVisible(driver, "Name", "password", 5);
             passwordTextBox.SendKeys(password);
 
             // Click the "Login" button
