@@ -7,7 +7,6 @@ using Newtonsoft.Json;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using NunitAutomation.TestModel;
-using NunitAutomation.Utilities.ExtentReport;
 using NunitAutomation.Utilities;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -30,24 +29,17 @@ namespace NunitAutomation.Tests
     {
 #pragma warning disable CS8618
 
-        private ExtentReports extent;
-        private ExtentTest test;
-        private LoginPage loginPageObj = new LoginPage();
-        private EducationPage educationPageObj = new EducationPage();
-        [SetUp]
-        public void SetupAuction()
-        {
-            extent = BaseTestManager.getInstance();
-            driver = new ChromeDriver();
-            //Login page object identified and defined
-            loginPageObj = new LoginPage();
-            loginPageObj.LoginSteps();
-        }
 
+
+        private EducationPage educationPageObj = new EducationPage();
+        private ExtentReports extent;
         [Test, Order(1)]
         public void AddEducation_Test()
         {
-            test = extent.CreateTest("AddEducation_Test", "AddEducationPositiveData");
+            CommonDriver driver = new CommonDriver();
+            driver.InitializeExtentReports();
+            string testName = "AddEducationPositiveData";
+            driver.SetupTest(testName);
 
             List<EducationTestModel> AddEducationPositiveData = Jsonhelper.ReadTestDataFromJson<EducationTestModel>("C:\\MVP Project\\NunitAutomation\\NunitAutomation\\JsonDataFiles\\AddEducationPositiveData.json");
             Console.WriteLine(AddEducationPositiveData.ToString());
@@ -63,28 +55,12 @@ namespace NunitAutomation.Tests
                 Console.WriteLine(degree);
                 string graduationyear = data.Graduationyear;
                 Console.WriteLine(graduationyear);
-                test.Log(Status.Pass, "Test Passed");
-                string screenshotPath = ScreenshotReport.CaptureScreenshot(driver, "AddEducation");
-                if (!string.IsNullOrEmpty(screenshotPath))
-                {
-                    test.Log(Status.Info, "Screenshot", MediaEntityBuilder.CreateScreenCaptureFromPath(screenshotPath).Build());
-                }
-
+                string screenshotName = "AddEducationPositiveData";
+                driver.CaptureScreenshot(screenshotName);
                 educationPageObj.addEducation(university, country, title, degree, graduationyear);
 
                 string newEducationData = educationPageObj.getVerifyNewEducationData();
-                if (country == newEducationData)
-                {
-                    //Assert.AreEqual(country, newEducationData, "Added Education and Expected Education do not match");
-                    test.Pass("Added Education data and Expected education data match");
-                }
-                else
-                {
-                    //Console.WriteLine("Check error");
-                    test.Fail("Added Education data and Expected education data do not match");
-
-                }
-                Console.WriteLine("Education has been Added");
+                Assert.AreEqual(newEducationData, country, "Actual data and Expected data do match");
 
             }
 
@@ -94,8 +70,10 @@ namespace NunitAutomation.Tests
         [Test, Order(2)]
         public void updateEducation_Test()
         {
-            test = extent.CreateTest("UpdateEducation_Test", "UpdatePositiveEducationData");
-
+            CommonDriver driver = new CommonDriver();
+            driver.InitializeExtentReports();
+            string testName = "UpdatePositiveEducationData";
+            driver.SetupTest(testName);
             // Read test data from the JSON file using JsonHelper
             List<EducationTestModel> UpdatePositiveEducationData = Jsonhelper.ReadTestDataFromJson<EducationTestModel>("C:\\MVP Project\\NunitAutomation\\NunitAutomation\\JsonDataFiles\\UpdatePositiveEducationData.json");
             Console.WriteLine(UpdatePositiveEducationData.ToString());
@@ -112,89 +90,27 @@ namespace NunitAutomation.Tests
                 Console.WriteLine(degree);
                 string graduationyear = data.Graduationyear;
                 Console.WriteLine(graduationyear);
-                test.Log(Status.Pass, "Test Passed");
-                string screenshotPath = ScreenshotReport.CaptureScreenshot(driver, "UpdateEducation");
-                if (!string.IsNullOrEmpty(screenshotPath))
-                {
-                    test.Log(Status.Info, "Screenshot", MediaEntityBuilder.CreateScreenCaptureFromPath(screenshotPath).Build());
-                }
-
-                try
-                {
-                    //perform the education test using the Education data
-                    educationPageObj = new EducationPage();
-                    educationPageObj.updateEducation(university, country, title, degree, graduationyear);
-                    string newUpdatednewUpdatedCertificate = educationPageObj.getverifyUpdatedEducationData(university, country, title, degree, graduationyear);
-                    if (university== newUpdatednewUpdatedCertificate)
-
-                    {
-                        test.Pass("Updated Education and Expected Education match");
-                    }
-                    else
-                    {
-                        test.Fail("Updated Education and Expected Education do not match");
-                    }
-                    Console.WriteLine("Education Updated successfully ");
-                }
-                catch (NoSuchElementException)
-                {
-                    Console.WriteLine($"Upadated element not found", university.ToString());
-                }
+                string screenshotName = "UpdatePositiveEducationData";
+                driver.CaptureScreenshot(screenshotName);
+                educationPageObj.updateEducation(university, country, title, degree, graduationyear);
+                string newUpdatedEducation = educationPageObj.getverifyUpdatedEducationData();
+                Assert.AreEqual(newUpdatedEducation, country, "Actual updated data and Expected updated data do match");
 
             }
         }
         [Test, Order(3)]
         public void deleteEducation_Test()
         {
-            test = extent.CreateTest("deleteEducation_Test", "DeleteEducation");
+            CommonDriver driver = new CommonDriver();
+            driver.InitializeExtentReports();
+            string testName = "DeleteEducation";
+            driver.SetupTest(testName);
+            string screenshotName = "Delete Education";
+            driver.CaptureScreenshot(screenshotName);
+            educationPageObj.deleteEduData();
+            string deletedData = educationPageObj.getVerifyDeletedData();
+            Assert.AreNotEqual(deletedData, "actual data and expert data do not match");
 
-            // Read test data from the JSON file using JsonHelper
-            List<EducationTestModel> DeleteEducationData = Jsonhelper.ReadTestDataFromJson<EducationTestModel>("C:\\MVP Project\\NunitAutomation\\NunitAutomation\\JsonDataFiles\\DeleteEducationData.json");
-            Console.WriteLine(DeleteEducationData.ToString());
-            foreach (var data in DeleteEducationData)
-            {
-                // Access the LoginData values
-                string university = data.University;
-                Console.WriteLine(university);
-                string country = data.Country;
-                Console.WriteLine(country);
-                string title = data.Title;
-                Console.WriteLine(title);
-                string degree = data.Degree;
-                Console.WriteLine(degree);
-                string graduationyear = data.Graduationyear;
-                Console.WriteLine(graduationyear);
-                test.Log(Status.Pass, "Test Passed");
-                string screenshotPath = ScreenshotReport.CaptureScreenshot(driver, "DeleteEducation");
-                if (!string.IsNullOrEmpty(screenshotPath))
-                {
-                    test.Log(Status.Info, "Screenshot", MediaEntityBuilder.CreateScreenCaptureFromPath(screenshotPath).Build());
-                }
-
-                //perform the education test using the Education data
-                educationPageObj = new EducationPage();
-                educationPageObj.deleteEduData(university, degree);
-                string DeletedData = educationPageObj.getVerifyDeletedData();
-                if (country != DeletedData)
-                {
-                    test.Pass("Deleted Education data and Expected Education data do not  match");
-
-                }
-                else
-                {
-                    test.Fail("Deleted Education data and Expected Education data do not  match");
-                }
-                Console.WriteLine("Education Entry successfully removed");
-            }
-        }
-
-
-        [TearDown]
-
-        public void TearDownAction()
-        {
-            driver.Quit();
-            extent.Flush();
         }
     }
 }

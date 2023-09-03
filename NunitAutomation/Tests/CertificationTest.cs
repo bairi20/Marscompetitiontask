@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NunitAutomation.Utilities.ExtentReport;
 
 namespace NunitAutomation.Tests
 {
@@ -19,27 +18,15 @@ namespace NunitAutomation.Tests
     {
 #pragma warning disable CS8618
 
+        private CertificationsPage certificationsPageObj = new CertificationsPage();
         private ExtentReports extent;
-        private ExtentTest test;
-
-       // private LoginPage loginPageObj = new LoginPage();
-        private CertificationsPage CertificationsPageObj = new CertificationsPage();
-
-        [SetUp]
-        public void SetUpAction()
-        {
-
-            extent = BaseTestManager.getInstance();
-            driver = new ChromeDriver();
-
-            //Login page object identified and defined
-            LoginPage loginPageObj = new LoginPage();
-            loginPageObj.LoginSteps();
-        }
         [Test, Order(1)]
         public void AddCertification_Test()
         {
-            test = extent.CreateTest("AddCertification_Test", "AddPositiveCertificationData");
+            CommonDriver driver = new CommonDriver();
+            driver.InitializeExtentReports();
+            string testName = "AddCertification";
+            driver.SetupTest(testName);
 
             // Read test data from the JSON file using JsonHelper
             List<CertificationTestModel> AddPositiveCertificationData = Jsonhelper.ReadTestDataFromJson<CertificationTestModel>("C:\\MVP Project\\NunitAutomation\\NunitAutomation\\JsonDataFiles\\AddPositiveCertificationData.json");
@@ -53,32 +40,20 @@ namespace NunitAutomation.Tests
                 Console.WriteLine(certifiedFrom);
                 string year = data.year;
                 Console.WriteLine(year);
-                test.Log(Status.Pass, "Test Passed");
-                string screenshotPath = ScreenshotReport.CaptureScreenshot(driver, "AddCertification");
-                if (!string.IsNullOrEmpty(screenshotPath))
-                {
-                    test.Log(Status.Info, "Screenshot", MediaEntityBuilder.CreateScreenCaptureFromPath(screenshotPath).Build());
-                }
-
-                // Perform the education test using the Education data
-                CertificationsPageObj.addCertifications(certificate, certifiedFrom, year);
-                string newCertificate = CertificationsPageObj.getVerifyCertificationList();
-                if (certificate == newCertificate)
-                {
-                    test.Pass("Added Certificate data and Expected Certificate data match");
-                }
-                else
-                {
-                    test.Fail("Added Certificate data and Expected Certificate data do not match");
-                }
+                string screenshotName = "AddPositiveCertificationData";
+                driver.CaptureScreenshot(screenshotName);
+                certificationsPageObj.addCertifications(certificate, certifiedFrom, year);
+                string newCertification = certificationsPageObj.getVerifyCertificationList();
+                Assert.AreEqual(newCertification, certificate, "actucal data and Expected data do match");
             }
         }
         [Test, Order(2)]
         public void UpdateCertification_Test()
         {
-            test = extent.CreateTest("UpdateCertification_Test", "UpdateCertificationPositiveData");
-
-
+            CommonDriver driver = new CommonDriver();
+            driver.InitializeExtentReports();
+            string testName = "UpdateCertification";
+            driver.SetupTest(testName);
             // Read test data from the JSON file using JsonHelper
             List<CertificationTestModel> UpdateCertificationPositiveData = Jsonhelper.ReadTestDataFromJson<CertificationTestModel>("C:\\MVP Project\\NunitAutomation\\NunitAutomation\\JsonDataFiles\\UpdateCertificationPositivedata.Json");
             Console.WriteLine(UpdateCertificationPositiveData.ToString());
@@ -91,81 +66,30 @@ namespace NunitAutomation.Tests
                 Console.WriteLine(certifiedFrom);
                 string year = data.year;
                 Console.WriteLine(year);
-                test.Log(Status.Pass, "Test Passed");
-                string screenshotPath = ScreenshotReport.CaptureScreenshot(driver, "UpdateCertification");
-                if (!string.IsNullOrEmpty(screenshotPath))
-                {
-                    test.Log(Status.Info, "Screenshot", MediaEntityBuilder.CreateScreenCaptureFromPath(screenshotPath).Build());
-                }
-
-                // Perform the education test using the Education data
-                try
-                {
-                    CertificationsPageObj.updateCertifications(certificate, certifiedFrom, year);
-
-                    string newUpdatedCertificate = CertificationsPageObj.getVerifyUpdateCertificationsList(certificate, certifiedFrom, year);
-
-                    if (certificate== newUpdatedCertificate)
-
-                    {
-                        test.Pass("Updated Certificate data and Expected Certificate data match");
-                    }
-                    else
-                    {
-                        test.Fail("Updated Certificate data and Expected Certificate data do not match");
-                    }
-                }
-                catch (NoSuchElementException)
-                {
-                    Console.WriteLine($"Upadated element not found", certificate.ToString());
-                }
+                string screenshotName = "UpdateCertificationPositiveData";
+                driver.CaptureScreenshot(screenshotName);
+                certificationsPageObj.updateCertifications(certificate, certifiedFrom, year);
+                string newUpdatedCertificate = certificationsPageObj.getVerifyUpdateCertificationsList();
+                Assert.AreEqual(newUpdatedCertificate, certificate, "actucal data and Expected data do match");
 
             }
         }
         [Test, Order(3)]
-        public void DeleteCertification_Test()
+        public void deleteCertification_Test()
         {
-            test = extent.CreateTest("DeleteCertification_Test", "DeleteCertificationData");
+            CommonDriver driver = new CommonDriver();
+            driver.InitializeExtentReports();
+            string testName = "DeleteCertification";
+            driver.SetupTest(testName);
+            string screenshotName = "Delete Certificate";
+            driver.CaptureScreenshot(screenshotName);
+            certificationsPageObj.deleteCertification();
+            string verifyDeletedData = certificationsPageObj.getVerifyDeleteCertificationList();
+            Assert.AreNotEqual(verifyDeletedData, "actual data and expert data do not match");
 
-            // Read test data from the JSON file using JsonHelper
-            List<CertificationTestModel> DeleteCertificationData = Jsonhelper.ReadTestDataFromJson<CertificationTestModel>("C:\\MVP Project\\NunitAutomation\\NunitAutomation\\JsonDataFiles\\DeleteCertificationData.Json");
-            Console.WriteLine(DeleteCertificationData.ToString());
-            foreach (var data in DeleteCertificationData)
-            {
-                // Access individual test data properties
-                string certificate = data.certificate;
-                Console.WriteLine(certificate);
-                string certifiedFrom = data.certifiedFrom;
-                Console.WriteLine(certifiedFrom);
-                string year = data.year;
-                Console.WriteLine(year);
-                test.Log(Status.Pass, "Test Passed");
-                string screenshotPath = ScreenshotReport.CaptureScreenshot(driver, "DeleteCertification");
-                if (!string.IsNullOrEmpty(screenshotPath))
-                {
-                    test.Log(Status.Info, "Screenshot", MediaEntityBuilder.CreateScreenCaptureFromPath(screenshotPath).Build());
-                }
-
-                // Perform the education test using the Education data
-                CertificationsPageObj.deleteCertification(certificate, year);
-
-                string deletedCertificate = CertificationsPageObj.getVerifyDeleteCertificationList();
-                if (certificate != deletedCertificate)
-                {
-                    test.Pass("Deleted Certificate data and Expected Certificate data do not  match");
-                }
-                else
-                {
-                    test.Fail("Deleted Certificate data and Expected Certificate data match");
-                }
-            }
         }
-        [TearDown]
-        public void TearDown()
-        {
-            driver.Quit();
-            extent.Flush();
-        }
+
+
 
     }
 }

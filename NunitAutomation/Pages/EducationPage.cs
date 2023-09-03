@@ -16,12 +16,16 @@ namespace NunitAutomation.Pages
         private static IWebElement graduationyearDropDown => driver.FindElement(By.Name("yearOfGraduation"));
         private static IWebElement addButton => driver.FindElement(By.XPath("//input[@value='Add']"));
         private static IWebElement newEducationData => driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[4]/div/div[2]/div/table/tbody[last()]/tr/td[1]"));
+        private static IWebElement editIcon => driver.FindElement(By.XPath("*//table/tbody[1]/tr[1]/td[6]/span[1]/i"));
         private static IWebElement updateButton => driver.FindElement(By.XPath("//input[@value='Update']"));
-        private static IWebElement messageBox => driver.FindElement(By.XPath("//div[@class='ns-box-inner']"));
+        private static IWebElement newUpdatedEducation => driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[4]/div/div[2]/div/table/tbody[1]/tr/td[1]"));
+        private static IWebElement deleteIcon => driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[4]/div/div[2]/div/table/tbody[1]/tr[1]/td[6]/span[2]/i"));
+        private static IWebElement verifyDeletedData => driver.FindElement(By.XPath(".//div[@data-tab='third']//table[@class='ui fixed table']//td"));
 
-
-        private static IWebElement verifyUpdatedEducationData => driver.FindElement(By.XPath(".//div[@data-tab='third']//table[@class='ui fixed table']//td"));
+        private static IWebElement messageBox => driver.FindElement(By.XPath("//div[@class='ns-box-inner']"));private static IWebElement verifyUpdatedEducationData => driver.FindElement(By.XPath(".//div[@data-tab='third']//table[@class='ui fixed table']//td"));
         private static IWebElement deletedData => driver.FindElement(By.XPath(".//div[@data-tab='third']//table[@class='ui fixed table']//td"));
+        private static IWebElement cancelIcon => driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[4]/div/div[2]/div/div/div[3]/div/input[2]"));
+        private static IWebElement updateCancelIcon => driver.FindElement(By.XPath("//input[@value='Cancel']"));
         public void addEducation(string university, string country, string title, string degree, string graduationyear)
         {
             Wait.WaitToBeClickable(driver, "XPath", "//a[text()='Education']", 13);
@@ -39,17 +43,16 @@ namespace NunitAutomation.Pages
 
         public string getVerifyNewEducationData()
         {
-            Thread.Sleep(2000);
+            Wait.WaitToBeVisible(driver, "XPath", "//*[@id=\"account-profile-section\"]//table/tbody[last()]/tr/td[1]", 12);
             return newEducationData.Text;
 
 
         }
         public void updateEducation(string university, string country, string title, string degree, string graduationyear)
         {
-            Wait.WaitToBeClickable(driver, "XPath", "//a[text()='Education']", 5);
+            Wait.WaitToBeClickable(driver, "XPath", "//a[text()='Education']", 10);
             educationTab.Click();
-            string editIconXPath = $"//tbody[tr[td[text()='{university}'] and td[text()='{degree}']]//span[1]";
-            IWebElement editIcon = driver.FindElement(By.XPath(editIconXPath));
+            Wait.WaitToBeClickable(driver, "XPath", "*//table/tbody[1]/tr[1]/td[6]/span[1]/i", 5);
             editIcon.Click();
             universityTextBox.Clear();
             universityTextBox.SendKeys(university);
@@ -60,25 +63,24 @@ namespace NunitAutomation.Pages
             graduationyearDropDown.SendKeys(graduationyear);
             Wait.WaitToBeClickable(driver, "XPath", "//input[@value='Update']", 8);
             updateButton.Click();
-
+           
+                
         }
-        public string getverifyUpdatedEducationData(string university, string country, string title, string degree, string graduationyear)
+        public string getverifyUpdatedEducationData()
         {
-            IWebElement newUpdatednewUpdatedCertificate = driver.FindElement(By.XPath($"//tbody[tr[td[text()='{university}']]]//span[1]"));
-            return verifyUpdatedEducationData.Text;
+            Wait.WaitToBeVisible(driver, "XPath", "//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[4]/div/div[2]/div/table/tbody[1]/tr/td[1]", 12);
+            return newUpdatedEducation.Text;
         }
-        public void deleteEduData(string university, string degree)
+        public void deleteEduData()
         {
-            Wait.WaitToBeClickable(driver, "XPath", "//a[text()='Education']", 5);
+            Wait.WaitToBeClickable(driver, "XPath", "//a[text() = 'Education']", 3);
             educationTab.Click();
-            string deleteIconXPath = $"//tbody/tr[td[text()='{university}'] and td[text()='{degree}']]//span[2]";
-            IWebElement deleteIcon = driver.FindElement(By.XPath(deleteIconXPath));
+            Wait.WaitToBeClickable(driver, "XPath", "//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[4]/div/div[2]/div/table/tbody[1]/tr[1]/td[6]/span[2]/i", 12);
             deleteIcon.Click();
-
         }
         public string getVerifyDeletedData()
         {
-            Thread.Sleep(2000);
+            Wait.WaitToBeVisible(driver, "XPath", "//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[4]/div/div[2]/div/table/tbody[1]/tr/td[1]", 12);
             return deletedData.Text;
         }
         public void AddNegativeEdu(string university, string country, string title, string degree, string graduationyear)
@@ -93,8 +95,7 @@ namespace NunitAutomation.Pages
             degreeTextBox.SendKeys(degree);
             graduationyearDropDown.SendKeys(graduationyear);
             addButton.Click();
-            Wait.WaitToBeVisible(driver, "Xpath", "//div[@class='ns-box-inner']", 5);
-            Thread.Sleep(1000);
+            Wait.WaitToBeVisible(driver, "Xpath", "//div[@class='ns-box-inner']", 10);
             string popupMessage = messageBox.Text;
             Console.WriteLine("messageBox.Text is: " + popupMessage);
             //string expectedMessage1 = "Education has been added";
@@ -108,7 +109,6 @@ namespace NunitAutomation.Pages
             }
             else if ((popupMessage == expectedMessage2 || popupMessage == expectedMessage3 || popupMessage == expectedMessage4))
             {
-                IWebElement cancelIcon = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[4]/div/div[2]/div/div/div[3]/div/input[2]"));
                 cancelIcon.Click();
             }
             else
@@ -124,9 +124,6 @@ namespace NunitAutomation.Pages
         {
            Wait.WaitToBeClickable(driver, "XPath", "//a[text()='Education']", 5);
             educationTab.Click();
-            string editIconXPath = $"//tbody[tr[td[text()='{university}']]]//span[1]";
-            IWebElement editIcon = driver.FindElement(By.XPath(editIconXPath));
-            Console.WriteLine("editicon");
             editIcon.Click();
             universityTextBox.Clear();
             universityTextBox.SendKeys(university);
@@ -136,11 +133,9 @@ namespace NunitAutomation.Pages
             degreeTextBox.SendKeys(degree);
             graduationyearDropDown.SendKeys(graduationyear);
             updateButton.Click();
-            Wait.WaitToBeVisible(driver, "Xpath", "//div[@class='ns-box-inner']", 5);
-            Thread.Sleep(2000);
+            Wait.WaitToBeVisible(driver, "Xpath", "//div[@class='ns-box-inner']", 10);
             string popupMessage = messageBox.Text;
             Console.WriteLine("messageBox.Text is: " + popupMessage);
-            //string expectedMessage1 = "Education as been Updated";
             string expectedMessage2 = "Please enter all the fields";
             string expectedMessage3 = "This information is already exist.";
             if (popupMessage.Contains("as been updated"))
@@ -149,8 +144,7 @@ namespace NunitAutomation.Pages
             }
             else if ((popupMessage == expectedMessage2) || (popupMessage == expectedMessage3))
             {
-                IWebElement cancelIcon = driver.FindElement(By.XPath("//input[@value='Cancel']"));
-                cancelIcon.Click();
+                updateCancelIcon.Click();
             }
             else
             {
